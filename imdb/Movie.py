@@ -27,6 +27,7 @@ from imdb import linguistics
 from imdb.utils import _Container
 from imdb.utils import analyze_title, build_title, canonicalTitle, cmpMovies, flatten
 
+import datetime
 
 class Movie(_Container):
     """A Movie.
@@ -318,6 +319,7 @@ class Movie(_Container):
             s += 'Cast: %s.\n' % _nameAndRole(cast)
         runtime = self.get('runtimes')
         if runtime:
+            runtime = [str(datetime.timedelta(minutes=int(t)))[:-3].replace(':', 'h') for t in runtime if runtime]
             s += 'Runtime: %s.\n' % ', '.join(runtime)
         countries = self.get('countries')
         if countries:
